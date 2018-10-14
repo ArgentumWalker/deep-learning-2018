@@ -1,0 +1,4 @@
+embeddings {
+  tensor_name: "Variable:0"
+  metadata_path: "C:\\Users\\ArgentumWalker\\Desktop\\HomeWork\\DeepLearning\\deep-learning-2018\\5\\homework/tensorboard\\labels.tsv"
+}
