@@ -7,14 +7,14 @@ import torchvision.datasets as datasets
 from torch.optim import Adam
 from torchvision import transforms
 
-from homework.dcgan import DCGenerator, DCDiscriminator
-from homework.dcgan import DCGANTrainer
+from dcgan.dcgan import DCDiscriminator, DCGenerator
+from dcgan.trainer import DCGANTrainer
 
 
 def get_config():
     parser = argparse.ArgumentParser(description='Training DCGAN on CIFAR10')
 
-    parser.add_argument('--log-root', type=str, default='../logs')
+    parser.add_argument('--log-root', type=str, default='./logs')
     parser.add_argument('--data-root', type=str, default='data')
     parser.add_argument('--log-name', type=str, default='train_dcgan.log')
     parser.add_argument('--no-cuda', action='store_true', default=False,
@@ -51,7 +51,7 @@ def main():
     dataloader = torch.utils.data.DataLoader(dataset, batch_size=config.batch_size, shuffle=True,
                                              num_workers=4, pin_memory=True)
 
-    discriminator, generator = DCDiscriminator(config.image_size), DCGenerator(config.image_size)
+    discriminator, generator = DCDiscriminator((3, config.image_size)), DCGenerator(100, (3, config.image_size))
 
     trainer = DCGANTrainer(generator=generator, discriminator=discriminator,
                            optimizer_d=Adam(discriminator.parameters(), lr=0.0002, betas=(0.5, 0.999)),
